@@ -29,6 +29,9 @@ public class CustomerUserDetailsService implements UserDetailsService {
         if(role == null) {
             user.setRole(USER_ROLE.ROLE_CUSTOMER);
         }
+
+        System.out.println(user.getRole());
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
