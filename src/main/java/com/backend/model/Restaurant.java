@@ -46,7 +46,7 @@ public class Restaurant {
 
     private LocalDateTime registrationDate;
 
-    private boolean open;
+    private boolean open = true;
 
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)

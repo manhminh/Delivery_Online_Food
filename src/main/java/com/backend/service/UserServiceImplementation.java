@@ -1,5 +1,6 @@
 package com.backend.service;
 
+import com.backend.config.jwt.JwtProvider;
 import com.backend.exception.UserException;
 import com.backend.model.Cart;
 import com.backend.model.User;
@@ -19,6 +20,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @Override
     public User createAccount(User user) {
@@ -43,5 +47,15 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findUserByJwtToken(String token) {
+        String email = jwtProvider.getEmailFromJwt(token);
+        User user = findUserByEmail(email);
+        if(user == null) {
+            throw new UserException("User not found");
+        }
+        return user;
     }
 }
