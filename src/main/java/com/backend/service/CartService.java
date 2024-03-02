@@ -2,10 +2,10 @@ package com.backend.service;
 
 import com.backend.model.Cart;
 import com.backend.model.CartItem;
-import com.backend.request.CartItemRequest;
+import com.backend.request.CreateCartItemRequest;
 
 public interface CartService {
-    CartItem addItemToCart(CartItemRequest request, String jwt);
+    CartItem addItemToCart(CreateCartItemRequest request, String jwt);
 
     CartItem updateCartItemQuantity(Long cartItemId, int quantity);
 
@@ -15,7 +15,7 @@ public interface CartService {
 
     Cart findCartById(Long cartId);
 
-    Cart findCartByUserId(String jwt);
+    Cart findCartByUserId(Long userId);
 
-    Cart clearCart(String jwt);
+    Cart clearCart(Long userId);
 }

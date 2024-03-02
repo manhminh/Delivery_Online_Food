@@ -26,9 +26,6 @@ public class RestaurantServiceImp implements RestaurantService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -53,15 +50,15 @@ public class RestaurantServiceImp implements RestaurantService {
     public Restaurant updateRestaurant(Long restaurantId, RestaurantRequest request) {
         Restaurant restaurant = getRestaurantById(restaurantId);
 
-        if(request.getCuisineType() != null) {
+        if (request.getCuisineType() != null) {
             restaurant.setCuisineType(request.getCuisineType());
         }
 
-        if(restaurant.getDescription() != null) {
+        if (restaurant.getDescription() != null) {
             restaurant.setDescription(request.getDescription());
         }
 
-        if(restaurant.getName() != null) {
+        if (restaurant.getName() != null) {
             restaurant.setName(request.getName());
         }
 
@@ -88,8 +85,8 @@ public class RestaurantServiceImp implements RestaurantService {
     public Restaurant getRestaurantById(Long restaurantId) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
 
-        if(restaurant.isEmpty()) {
-           throw new RestaurantException("Restaurant not found");
+        if (restaurant.isEmpty()) {
+            throw new RestaurantException("Restaurant not found");
         }
 
         return restaurant.get();
@@ -118,15 +115,15 @@ public class RestaurantServiceImp implements RestaurantService {
 
         boolean isFavorited = false;
         List<RestaurantDTO> favorites = user.getFavorites();
-        for(RestaurantDTO favorite : favorites) {
-            if(favorite.getId().equals(restaurantId)) {
+        for (RestaurantDTO favorite : favorites) {
+            if (favorite.getId().equals(restaurantId)) {
                 isFavorited = true;
                 break;
             }
         }
 
-        if(isFavorited) {
-           favorites.removeIf(favorite -> favorite.getId().equals(restaurantId));
+        if (isFavorited) {
+            favorites.removeIf(favorite -> favorite.getId().equals(restaurantId));
         } else {
             favorites.add(restaurantDTO);
         }

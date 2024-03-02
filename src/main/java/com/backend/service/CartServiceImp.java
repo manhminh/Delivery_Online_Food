@@ -7,7 +7,7 @@ import com.backend.model.Food;
 import com.backend.model.User;
 import com.backend.repository.CartItemRepository;
 import com.backend.repository.CartRepository;
-import com.backend.request.CartItemRequest;
+import com.backend.request.CreateCartItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class CartServiceImp implements CartService{
     private FoodService foodService;
 
     @Override
-    public CartItem addItemToCart(CartItemRequest request, String jwt) {
+    public CartItem addItemToCart(CreateCartItemRequest request, String jwt) {
         User user = userService.findUserByJwtToken(jwt);
 
         Food food = foodService.getFoodById(request.getFoodId());
@@ -109,19 +109,20 @@ public class CartServiceImp implements CartService{
     }
 
     @Override
-    public Cart findCartByUserId(String jwt) {
-        User user = userService.findUserByJwtToken(jwt);
-        Cart cart = cartRepository.findByCustomerId(user.getId());
+    public Cart findCartByUserId(Long userId) {
+        Cart cart = cartRepository.findByCustomerId(userId);
         if(cart == null){
             throw new CartException("Cart not found");
         }
+
+        cart.setTotalPrice(calculateCartTotals(cart));
 
         return cart;
     }
 
     @Override
-    public Cart clearCart(String jwt) {
-        Cart cart = findCartByUserId(jwt);
+    public Cart clearCart(Long userId) {
+        Cart cart = findCartByUserId(userId);
         cart.getItems().clear();
 
         return cartRepository.save(cart);

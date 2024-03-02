@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CartItemRequest {
+public class CreateCartItemRequest {
     private Long foodId;
 
     private int quantity;
