@@ -25,7 +25,7 @@ public class Food {
     private Long price;
 
     @ManyToOne
-    private Category category;
+    private Category foodCategory;
 
     @ElementCollection
     private List<String> images = new ArrayList<>();

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImplementation implements UserService {
+public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
 
