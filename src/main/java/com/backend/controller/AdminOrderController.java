@@ -21,7 +21,7 @@ public class AdminOrderController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/order/restaurant/{restaurantId}")
+    @GetMapping("/orders/restaurant/{restaurantId}")
     public ResponseEntity<List<Order>> getRestaurantOrderHistory(
             @PathVariable Long restaurantId,
             @RequestParam(required = false) String orderStatus,
@@ -32,7 +32,7 @@ public class AdminOrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @PutMapping("/order/{orderId}/{orderStatus}")
+    @PutMapping("/ordesr/{orderId}/{orderStatus}")
     public ResponseEntity<Order> updateOrder(
             @PathVariable Long orderId,
             @PathVariable String orderStatus,

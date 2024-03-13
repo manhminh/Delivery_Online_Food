@@ -42,7 +42,7 @@ public class IngredientController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @GetMapping("restaurant/{restaurantId}")
+    @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<IngredientsItem>> getRestaurantIngredients(
             @PathVariable("restaurantId") Long restaurantId) {
         List<IngredientsItem> ingredients = ingredientService.findRestaurantIngredients(restaurantId);
@@ -50,7 +50,7 @@ public class IngredientController {
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 
-    @GetMapping("restaurant/{restaurantId}/category")
+    @GetMapping("/restaurant/{restaurantId}/category")
     public ResponseEntity<List<IngredientCategory>> getRestaurantIngredientCategory(
             @PathVariable("restaurantId") Long restaurantId) {
         List<IngredientCategory> ingredients = ingredientService.findIngredientCategoriesByRestaurantId(restaurantId);

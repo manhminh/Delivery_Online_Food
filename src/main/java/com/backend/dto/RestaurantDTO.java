@@ -13,7 +13,7 @@ import java.util.List;
 public class RestaurantDTO {
     private Long id;
 
-    private String title;
+    private String name;
 
     @Column(length = 1000)
     private List<String> images = new ArrayList<>();

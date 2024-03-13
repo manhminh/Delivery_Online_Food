@@ -51,7 +51,7 @@ public class AuthController {
         String jwt = jwtProvider.generateToken(authentication);
 
         AuthResponse authResponse = new AuthResponse();
-        authResponse.setToken(jwt);
+        authResponse.setJwt(jwt);
         authResponse.setMessage("Register successfully");
         authResponse.setRole(createdUser.getRole());
 
@@ -70,7 +70,7 @@ public class AuthController {
         String role = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
 
         AuthResponse authResponse = new AuthResponse();
-        authResponse.setToken(jwt);
+        authResponse.setJwt(jwt);
         authResponse.setMessage("Login successfully");
         authResponse.setRole(USER_ROLE.valueOf(role));
 

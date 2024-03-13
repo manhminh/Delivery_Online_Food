@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CartServiceImp implements CartService{
+public class CartServiceImp implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
@@ -36,13 +36,20 @@ public class CartServiceImp implements CartService{
 
         Cart cart = cartRepository.findByCustomerId(user.getId());
 
-        for(CartItem cartItem : cart.getItems()){
-            if(cartItem.getFood().equals(food)){
+        // Iterates through the existing items in the cart.
+        // If it finds an item with the same food item as the one being added,
+        // it updates the quantity of that item and returns the updated cart item
+        // using the updateCartItemQuantity method.
+        for (CartItem cartItem : cart.getItems()) {
+            if (cartItem.getFood().equals(food)) {
                 int newQuantity = cartItem.getQuantity() + request.getQuantity();
                 return updateCartItemQuantity(cartItem.getId(), newQuantity);
             }
         }
 
+        // If no matching item is found, it creates a new CartItem object with the provided details,
+        // calculates the price based on the quantity and food price, and saves it to the database
+        // using cartItemRepository.
         CartItem newItem = new CartItem();
         newItem.setCart(cart);
         newItem.setFood(food);
@@ -51,7 +58,7 @@ public class CartServiceImp implements CartService{
         newItem.setIngredients(request.getIngredients());
 
         CartItem savedItem = cartItemRepository.save(newItem);
-
+        System.out.println(savedItem);
         cart.getItems().add(savedItem);
 
         return savedItem;
@@ -60,7 +67,7 @@ public class CartServiceImp implements CartService{
     @Override
     public CartItem updateCartItemQuantity(Long cartItemId, int quantity) {
         Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
-        if(cartItem.isEmpty()){
+        if (cartItem.isEmpty()) {
             throw new CartException("Cart item not found");
         }
 
@@ -78,7 +85,7 @@ public class CartServiceImp implements CartService{
         Cart cart = cartRepository.findByCustomerId(user.getId());
 
         Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
-        if(cartItem.isEmpty()){
+        if (cartItem.isEmpty()) {
             throw new CartException("Cart item not found");
         }
 
@@ -92,7 +99,7 @@ public class CartServiceImp implements CartService{
     public Long calculateCartTotals(Cart cart) {
         Long total = 0L;
 
-        for(CartItem item : cart.getItems()){
+        for (CartItem item : cart.getItems()) {
             total += item.getFood().getPrice() * item.getQuantity();
         }
         return total;
@@ -101,7 +108,7 @@ public class CartServiceImp implements CartService{
     @Override
     public Cart findCartById(Long cartId) {
         Optional<Cart> cart = cartRepository.findById(cartId);
-        if(cart.isEmpty()){
+        if (cart.isEmpty()) {
             throw new CartException("Cart not found");
         }
 
@@ -111,7 +118,7 @@ public class CartServiceImp implements CartService{
     @Override
     public Cart findCartByUserId(Long userId) {
         Cart cart = cartRepository.findByCustomerId(userId);
-        if(cart == null){
+        if (cart == null) {
             throw new CartException("Cart not found");
         }
 

@@ -26,10 +26,10 @@ public class CategoryController {
         User user = userService.findUserByJwtToken(jwt);
         Category createdCategory = categoryService.createCategory(category.getName(), user.getId());
 
-        return new ResponseEntity<>(category, HttpStatus.CREATED);
+        return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
 
-    @GetMapping("/categories/{restaurantId}")
+    @GetMapping("/categories/restaurant/{restaurantId}")
     public ResponseEntity<List<Category>> getRestaurantCategories(
             @RequestHeader("Authorization") String jwt,
             @PathVariable("restaurantId") Long restaurantId) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public Food createFood(FoodRequest request, Category category, Restaurant restaurant) {
+        System.out.println(request);
         Food food = new Food();
         food.setFoodCategory(category);
         food.setRestaurant(restaurant);
@@ -29,9 +31,11 @@ public class FoodServiceImp implements FoodService {
         food.setImages(request.getImages());
         food.setName(request.getName());
         food.setPrice(request.getPrice());
+        food.setAvailable(true);
         food.setIngredients(request.getIngredients());
         food.setVegetarian(request.isVegetarian());
         food.setSeasonal(request.isSeasonal());
+        food.setCreatedAt(new Date());
 
         Food savedFood = foodRepository.save(food);
         restaurant.getFoods().add(savedFood);

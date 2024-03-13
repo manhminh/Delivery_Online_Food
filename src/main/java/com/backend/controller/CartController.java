@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class CartController {
@@ -29,16 +31,24 @@ public class CartController {
         return new ResponseEntity<>(createdItem, HttpStatus.OK);
     }
 
-    @PutMapping("/cart-item/update")
+//    @GetMapping("/cart/${cartId}/items")
+//    public ResponseEntity<List<CartItem>> getAllCartItems() {
+//        List<CartItem> cartItems = cartService.getAllCartItems();
+//        return new ResponseEntity<>(cartItems, HttpStatus.OK);
+//    }
+
+
+    @PutMapping("/cart/cart-item/update")
     public ResponseEntity<CartItem> updateCartItemQuantity(
             @RequestBody UpdateCartItemRequest request,
             @RequestHeader("Authorization") String jwt) {
 
         CartItem createdItem = cartService.updateCartItemQuantity(request.getCartItemId(), request.getQuantity());
+
         return new ResponseEntity<>(createdItem, HttpStatus.OK);
     }
 
-    @DeleteMapping("/cart-item/{itemId}/remove")
+    @DeleteMapping("/cart/cart-item/{itemId}/remove")
     public ResponseEntity<Cart> removeItemFromCart(
             @PathVariable("itemId") Long itemId,
             @RequestHeader("Authorization") String jwt) {
@@ -56,7 +66,7 @@ public class CartController {
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    @PutMapping("/cart")
+    @GetMapping("/cart")
     public ResponseEntity<Cart> findUserCart(
             @RequestHeader("Authorization") String jwt) {
         User user = userService.findUserByJwtToken(jwt);
